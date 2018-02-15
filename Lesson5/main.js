@@ -1,7 +1,7 @@
 var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
 
-var WIDTH = 600;
+var WIDTH = 800;
 var HEIGHT = 400;
 
 //ball location
@@ -21,7 +21,7 @@ function circle(x,y,r){
 
 //initialize the animation
 function init(){
-	x = 300;
+	x = 400;
 	y = 200;
 	mx = 3;
 	my = 4;
