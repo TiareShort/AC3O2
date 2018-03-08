@@ -20,6 +20,14 @@ var itemX;
 var itemY;
 var itemSize = 50;
 
+//ghost
+var threatX;
+var threatY;
+var threatSize;
+var threatcollision = false;
+
+var gameOver = false;
+
 var score = 0;
 var collision = false;
 
@@ -37,6 +45,12 @@ function drawMouse(){
 	ctx.drawImage(mouse, itemX, itemY, itemSize, itemSize)
 }
 
+function drawGhost(){
+	var mouse = new Image();
+	threat.src = "ghost.png";
+	ctx.drawImage(threat, threatX, threatY, threatSize, threatSize)
+}
+
 function clear(){
 	ctx.clearRect(0,0,WIDTH,HEIGHT);
 }
@@ -46,6 +60,11 @@ function clear(){
 function init(){
 	itemX = Math.floor(Math.random()*(WIDTH - itemSize));
 	itemY = Math.floor(Math.random()*(HEIGHT - itemSize));
+
+	//rando ghost position
+	threatX = Math.floor(Math.random()*(WIDTH - threatSize));
+	threatY = Math.floor(Math.random()*(HEIGHT - threatSize));
+
 
 	//keyboard event
 
@@ -75,8 +94,10 @@ function keydownControl(e){
 
 function draw(){
 	clear();
-	drawCharacter();
+
+	if (gameOver = false){drawCharacter();
 	drawMouse();
+	drawGhost();
 
 	//bounce of wall
 
@@ -87,13 +108,18 @@ function draw(){
 	if (y + speedY < 0 || y + speedY + size > HEIGHT){
 		speedY = -speedY;
 	}
-
+else{
+	ctx.font = "40px Impact";
+	ctx.fillText("GAME OVER", 200, 300);
+}
 
 	x += speedX;
 	y += speedY;
 
 collisionCheck();
 collisionHandle();
+followPlayer();
+	
 
 }
 
@@ -104,6 +130,12 @@ function collisionCheck(){
 	}
 else{
 collision = false;
+}
+
+if((x + size >= threatX) && (threatX + threatSize >= x) && (y + size >= threatY) && (threatY + threatSize >= y)){
+		threatCollision = true;
+	}
+else{threatCollision = false;
 }
 }
 
@@ -116,7 +148,29 @@ score +=1;
 displayScore.textContent = score;
 
 	}
+
+if (threatCollision){
+	gameOver = true;
+}	
+
 }
 
+function followPlayer(){
+	if (threatX < x){
+		threatX += 1
+	}
+	if (threatX < x){
+		threatX += 1
+	}
+	if (threatY < y){
+		threatY += 1
+	}
+	if (threatY < y){
+		threatY += 1
+	}
+	
+	
+	
+}
 
 init();
